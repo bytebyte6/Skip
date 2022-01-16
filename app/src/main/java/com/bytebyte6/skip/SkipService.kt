@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.util.Log
 import android.view.accessibility.AccessibilityEvent
+import android.view.accessibility.AccessibilityEvent.TYPE_VIEW_CLICKED
 import android.view.accessibility.AccessibilityNodeInfo
 
 class SkipService : AccessibilityService() {
@@ -23,23 +24,21 @@ class SkipService : AccessibilityService() {
         super.onCreate()
         registerReceiver(pingReceiver, IntentFilter(PING))
         sendBroadcast(Intent(PONG))
-        Log.d(TAG,"onCreate")
+        Log.d(TAG, "onCreate")
     }
 
     override fun onDestroy() {
         unregisterReceiver(pingReceiver)
         super.onDestroy()
-        Log.d(TAG,"onDestroy")
+        Log.d(TAG, "onDestroy")
     }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
-        Log.d(TAG,"$event")
-        if (event != null) {
+        if (event != null && event.eventType != TYPE_VIEW_CLICKED) {
             val list = event.source?.findAccessibilityNodeInfosByText(getString(R.string.skip))
             list?.forEach {
-                if (it.isClickable) {
-                    it.performAction(AccessibilityNodeInfo.ACTION_CLICK)
-                }
+                it.performAction(AccessibilityNodeInfo.ACTION_CLICK)
+                Log.d(TAG, "Click text: ${it.text}")
             }
         }
     }
