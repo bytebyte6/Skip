@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">电光石火</string>
+    <string name="skip">跳过</string>
+    <string name="accessibility_service_description">跳过开屏广告</string>
+    <string name="skip_service_not_enable">跳过开屏广告服务未启用</string>
+    <string name="skip_service_enable">跳过开屏广告服务已启用</string>
+    <string name="enable">前往开启</string>
+</resources>
