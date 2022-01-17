@@ -37,7 +37,9 @@ class SkipService : AccessibilityService() {
         if (event != null && event.eventType != TYPE_VIEW_CLICKED) {
             val list = event.source?.findAccessibilityNodeInfosByText(getString(R.string.skip))
             list?.forEach {
-                it.performAction(AccessibilityNodeInfo.ACTION_CLICK)
+                if (it.isClickable) {
+                    it.performAction(AccessibilityNodeInfo.ACTION_CLICK)
+                }
                 Log.d(TAG, "Click text: ${it.text}")
             }
         }
