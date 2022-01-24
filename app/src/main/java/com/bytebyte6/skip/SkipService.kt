@@ -54,7 +54,7 @@ class SkipService : AccessibilityService() {
                     Log.d(TAG, "Click text: ${it.text}")
                 } else {
                     val parent = it.parent
-                    if (parent.isClickable) {
+                    if (parent != null && parent.isClickable) {
                         parent.performAction(AccessibilityNodeInfo.ACTION_CLICK)
                         Log.d(TAG, "Click parent text: ${parent.text}")
                     }
