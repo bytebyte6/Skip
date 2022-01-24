@@ -22,7 +22,8 @@
             android:enabled="true"
             android:name=".SkipService"
             android:label="@string/accessibility_service_description"
-            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.accessibilityservice.AccessibilityService" />
             </intent-filter>
