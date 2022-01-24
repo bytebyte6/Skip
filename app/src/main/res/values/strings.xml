@@ -5,4 +5,9 @@
     <string name="skip_service_not_enable">跳过开屏广告服务未启用</string>
     <string name="skip_service_enable">跳过开屏广告服务已启用</string>
     <string name="enable">前往开启</string>
+    <string name="package_name">包名</string>
+    <string name="click_count">点击次数</string>
+    <string name="is_clickable">是否可点</string>
+    <string name="parent_is_clickable">父View是否可点</string>
+    <string name="click_text">点击的文本</string>
 </resources>
