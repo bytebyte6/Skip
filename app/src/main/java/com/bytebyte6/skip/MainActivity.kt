@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.provider.Settings
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.bytebyte6.skip.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -24,6 +25,21 @@ class MainActivity : AppCompatActivity() {
             goToSettingsScreen()
         }
         sendBroadcast(Intent(SkipService.PING))
+        initRecyclerView()
+    }
+
+    private fun initRecyclerView(){
+        val adapter = AppEntityAdapter()
+        binding.recyclerView.apply {
+            this.adapter = adapter
+        }
+        AppDataBase.getAppDataBase(this)?.appDao()?.apply {
+            this.observe().observe(this@MainActivity, {
+                it?.apply {
+                    adapter.update(this)
+                }
+            })
+        }
     }
 
     private fun goToSettingsScreen() {
