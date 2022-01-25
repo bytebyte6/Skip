@@ -54,7 +54,7 @@ class SkipService : AccessibilityService() {
                     Log.d(TAG, "Click text: ${it.text}")
                 } else {
                     val parent = it.parent
-                    if (parent.isClickable) {
+                    if (parent != null && parent.isClickable) {
                         parent.performAction(AccessibilityNodeInfo.ACTION_CLICK)
                         Log.d(TAG, "Click parent text: ${parent.text}")
                     }
@@ -70,16 +70,21 @@ class SkipService : AccessibilityService() {
                 val packageName = nodeInfo.packageName.toString()
                 val entity = appDao().isExist(packageName)
                 if (entity == null) {
+                    val count = if (nodeInfo.isClickable || nodeInfo.parent?.isClickable == true) {
+                        1
+                    } else {
+                        0
+                    }
                     val appEntity = AppEntity(
                         packageName = packageName,
-                        count = 1,
+                        count = count,
                         isClickable = nodeInfo.isClickable,
                         parentIsClickable = nodeInfo.parent?.isClickable ?: false,
                         text = nodeInfo.text.toString()
                     )
                     appDao().insert(appEntity)
                 } else {
-                    val count = if (nodeInfo.isClickable) {
+                    val count = if (nodeInfo.isClickable || nodeInfo.parent?.isClickable == true) {
                         entity.count + 1
                     } else {
                         entity.count
