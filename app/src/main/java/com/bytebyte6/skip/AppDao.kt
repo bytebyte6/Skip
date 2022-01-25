@@ -14,9 +14,6 @@ interface AppDao {
     @Query("SELECT * FROM AppEntity WHERE packageName=:key")
     fun isExist(key: String): AppEntity?
 
-    @Query("SELECT * FROM AppEntity")
-    fun getList(): List<AppEntity>
-
-    @Query("SELECT * FROM AppEntity")
-    fun observe(): LiveData<List<AppEntity>?>
+    @Query("SELECT * FROM AppEntity ORDER BY count DESC")
+    fun getLiveData(): LiveData<List<AppEntity>>
 }
