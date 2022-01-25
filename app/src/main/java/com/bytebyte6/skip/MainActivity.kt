@@ -22,20 +22,11 @@ class MainActivity : AppCompatActivity() {
         binding.button.setOnClickListener {
             goToSettingsScreen()
         }
+        binding.toolbar.setOnMenuItemClickListener {
+            startActivity(Intent(this,LogActivity::class.java))
+            true
+        }
         sendBroadcast(Intent(SkipService.PING))
-        initRecyclerView()
-    }
-
-    private fun initRecyclerView() {
-        val adapter = AppEntityAdapter()
-        binding.recyclerView.apply {
-            this.adapter = adapter
-        }
-        AppDataBase.getAppDataBase(this)?.appDao()?.apply {
-            this.getLiveData().observe(this@MainActivity, {
-                adapter.update(it)
-            })
-        }
     }
 
     private fun goToSettingsScreen() {
