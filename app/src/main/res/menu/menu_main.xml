@@ -3,9 +3,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        app:showAsAction="always"
+        app:showAsAction="ifRoom"
         android:visible="true"
         android:icon="@drawable/ic_baseline_book_24"
         android:id="@+id/log"
         android:title="@string/logcat" />
+
+    <item
+        app:showAsAction="never"
+        android:visible="true"
+        android:icon="@drawable/ic_baseline_account_circle_24"
+        android:id="@+id/account"
+        android:title="@string/account_manager" />
 </menu>
