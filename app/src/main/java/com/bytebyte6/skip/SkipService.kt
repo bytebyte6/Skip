@@ -55,17 +55,19 @@ class SkipService : AccessibilityService() {
         ) {
             val list = event.source?.findAccessibilityNodeInfosByText(getString(R.string.skip))
             list?.forEach {
-                if (it.isClickable) {
-                    it.performAction(AccessibilityNodeInfo.ACTION_CLICK)
-                    Log.d(TAG, "Click: ${it.text}")
-                } else {
-                    val parent = it.parent
-                    if (parent != null && parent.isClickable) {
-                        parent.performAction(AccessibilityNodeInfo.ACTION_CLICK)
-                        Log.d(TAG, "Click parent: ${parent.text}")
+                if (it.text.length <= 9){
+                    if (it.isClickable) {
+                        it.performAction(AccessibilityNodeInfo.ACTION_CLICK)
+                        Log.d(TAG, "Click: ${it.text}")
+                    } else {
+                        val parent = it.parent
+                        if (parent != null && parent.isClickable) {
+                            parent.performAction(AccessibilityNodeInfo.ACTION_CLICK)
+                            Log.d(TAG, "Click parent: ${parent.text}")
+                        }
                     }
+                    updateDb(it)
                 }
-                updateDb(it)
             }
         }
     }

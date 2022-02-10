@@ -7,5 +7,5 @@ import androidx.room.PrimaryKey
 data class SportPlan(
     @PrimaryKey
     val id: Int = 0,
-    val list: List<Sport>
+    val list: List<Sport> = emptyList()
 )
