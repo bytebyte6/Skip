@@ -19,4 +19,14 @@
     <string name="cancel">取消</string>
     <string name="enter">确认</string>
     <string name="account_manager">账号管理</string>
+    <string name="today_plan">今日训练计划</string>
+    <string name="sport_list">运动列表</string>
+    <string name="add_sport">添加运动</string>
+    <string name="training_way">训练方式</string>
+    <string name="by_time">按时间</string>
+    <string name="by_group">按组数</string>
+    <string name="please_input_duration_s">请输入持续时间(秒)</string>
+    <string name="please_input_group_and_count">请输入组数与每组次数并用逗号隔开</string>
+    <string name="please_input_rest_duration">请输入休息时间(秒)</string>
+    <string name="please_input_group_duration_s">请输入组间休息时间(秒)</string>
 </resources>
