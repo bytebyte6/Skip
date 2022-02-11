@@ -5,35 +5,51 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Sport(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     /**
      * 运动名称
      */
     val name: String,
     /**
-     * 秒
+     * 最小持续时间 s
      */
-    val duration: Int,
+    val minDuration: Int,
+    /**
+     * 最大持续时间 s
+     */
+    val maxDuration: Int,
     /**
      * 0 按时间
      * 1 按组数
      */
     val trainingWay:Int,
     /**
-     * 次数
+     * 最小次数
      */
-    val count: Int,
+    val minCount: Int,
     /**
-     * 组数
+     * 最小组数
      */
-    val group: Int,
+    val minGroup: Int,
     /**
-     * 组间休息时间
+     * 最大次数
+     */
+    val maxCount: Int,
+    /**
+     * 最大组数
+     */
+    val maxGroup: Int,
+    /**
+     * 组间休息时间 s
      */
     val groupRestDuration:Int,
     /**
-     * 完成这个项目之后的休息时间
+     * 完成这个项目之后的休息时间 s
      */
-    val restDuration: Int
+    val restDuration: Int,
+    /**
+     * 是否达标
+     */
+    val goal:Boolean=false
 )

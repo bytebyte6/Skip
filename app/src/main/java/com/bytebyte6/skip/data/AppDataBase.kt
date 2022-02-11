@@ -11,6 +11,10 @@ abstract class AppDataBase : RoomDatabase() {
 
     abstract fun accountDao(): AccountDao
 
+    abstract fun sportDao(): SportDao
+
+    abstract fun sportPlanDao(): SportPlanDao
+
     companion object {
         @Volatile
         private var appDataBase: AppDataBase? = null

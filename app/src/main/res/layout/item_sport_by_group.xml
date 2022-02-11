@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sport_name" />
+
+    <TextView
+        android:id="@+id/tvTrainingWay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/way_by_group" />
+
+    <TextView
+        android:id="@+id/tvMinCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/min_count_s" />
+
+    <TextView
+        android:id="@+id/tvMaxCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/max_count_s" />
+
+    <TextView
+        android:id="@+id/tvMinGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/min_group_s" />
+
+    <TextView
+        android:id="@+id/tvMaxGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/max_group_s" />
+
+    <TextView
+        android:id="@+id/tvRestDuration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/rest_duration" />
+
+</LinearLayout>
