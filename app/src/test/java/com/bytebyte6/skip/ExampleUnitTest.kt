@@ -12,6 +12,8 @@ import org.junit.Assert.*
 class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
+        println("跳过广告 | 4s".length)
+        println(System.currentTimeMillis()/1000)
         assertEquals(4, 2 + 2)
     }
 }

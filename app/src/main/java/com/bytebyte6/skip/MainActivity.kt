@@ -23,7 +23,10 @@ class MainActivity : AppCompatActivity() {
             goToSettingsScreen()
         }
         binding.toolbar.setOnMenuItemClickListener {
-            startActivity(Intent(this,LogActivity::class.java))
+            when (it.itemId) {
+                R.id.account -> startActivity(Intent(this, AccountActivity::class.java))
+                R.id.log -> startActivity(Intent(this, LogActivity::class.java))
+            }
             true
         }
         sendBroadcast(Intent(SkipService.PING))

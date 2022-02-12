@@ -1,19 +1,25 @@
-package com.bytebyte6.skip
+package com.bytebyte6.skip.data
 
 import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
+import androidx.room.*
 
-@Database(entities = [AppEntity::class], version = 1, exportSchema = false)
+@Database(entities = [Log::class,Account::class,Sport::class,SportPlan::class], version = 1, exportSchema = false)
+@TypeConverters(Converter::class)
 abstract class AppDataBase : RoomDatabase() {
-    abstract fun appDao(): AppDao
+
+    abstract fun logDao(): LogDao
+
+    abstract fun accountDao(): AccountDao
+
+    abstract fun sportDao(): SportDao
+
+    abstract fun sportPlanDao(): SportPlanDao
 
     companion object {
         @Volatile
         private var appDataBase: AppDataBase? = null
 
-        fun getAppDataBase(context: Context): AppDataBase? {
+        fun getAppDataBase(context: Context): AppDataBase {
             if (appDataBase == null) {
                 synchronized(AppDataBase::class) {
                     if (appDataBase == null) {
@@ -25,7 +31,7 @@ abstract class AppDataBase : RoomDatabase() {
                     }
                 }
             }
-            return appDataBase
+            return appDataBase!!
         }
     }
 }

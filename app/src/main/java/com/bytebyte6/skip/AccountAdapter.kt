@@ -4,17 +4,16 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import androidx.room.PrimaryKey
-import com.bytebyte6.skip.databinding.ItemAppEntityBinding
+import com.bytebyte6.skip.data.Account
+import com.bytebyte6.skip.databinding.ItemAccountBinding
 
-class AppEntityAdapter : RecyclerView.Adapter<AppEntityAdapter.ViewHolder>() {
+class AccountAdapter : RecyclerView.Adapter<AccountAdapter.ViewHolder>() {
 
-    private val list = mutableListOf<AppEntity>()
+    private val list = mutableListOf<Account>()
 
     @SuppressLint("NotifyDataSetChanged")
-    fun update(list: List<AppEntity>) {
+    fun update(list: List<Account>) {
         this.list.clear()
         this.list.addAll(list)
         this.notifyDataSetChanged()
@@ -22,17 +21,14 @@ class AppEntityAdapter : RecyclerView.Adapter<AppEntityAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_app_entity, parent, false)
+            .inflate(R.layout.item_account, parent, false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val entity = list[position]
-        holder.binding.tvPackageName.text = entity.packageName
-        holder.binding.tvCount.text = entity.count.toString()
-        holder.binding.tvIsClickable.text = entity.isClickable.toString()
-        holder.binding.tvParentClickable.text = entity.parentIsClickable.toString()
-        holder.binding.tvText.text = entity.text
+        holder.binding.tvAccount.text = entity.account
+        holder.binding.tvPassword.text = entity.password
     }
 
     override fun getItemCount(): Int {
@@ -40,6 +36,6 @@ class AppEntityAdapter : RecyclerView.Adapter<AppEntityAdapter.ViewHolder>() {
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val binding = ItemAppEntityBinding.bind(itemView)
+        val binding = ItemAccountBinding.bind(itemView)
     }
 }

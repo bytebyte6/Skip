@@ -2,6 +2,7 @@ package com.bytebyte6.skip
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.bytebyte6.skip.data.AppDataBase
 import com.bytebyte6.skip.databinding.ActivityLogBinding
 
 class LogActivity : AppCompatActivity() {
@@ -16,12 +17,12 @@ class LogActivity : AppCompatActivity() {
     }
 
     private fun initRecyclerView() {
-        val adapter = AppEntityAdapter()
+        val adapter = LogAdapter()
         binding.recyclerView.apply {
             this.adapter = adapter
         }
-        AppDataBase.getAppDataBase(this)?.appDao()?.apply {
-            this.getLiveData().observe(this@LogActivity, {
+        AppDataBase.getAppDataBase(this).logDao().apply {
+            this.list().observe(this@LogActivity, {
                 adapter.update(it)
             })
         }

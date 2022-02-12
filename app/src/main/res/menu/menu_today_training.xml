@@ -5,14 +5,15 @@
     <item
         app:showAsAction="ifRoom"
         android:visible="true"
-        android:icon="@drawable/ic_baseline_book_24"
-        android:id="@+id/log"
-        android:title="@string/logcat" />
+        android:icon="@drawable/ic_baseline_format_list_numbered_rtl_24"
+        android:id="@+id/sport_list"
+        android:title="@string/sport_list" />
 
     <item
         app:showAsAction="never"
         android:visible="true"
-        android:icon="@drawable/ic_baseline_account_circle_24"
-        android:id="@+id/account"
-        android:title="@string/account_manager" />
+        android:icon="@drawable/ic_baseline_add_24"
+        android:id="@+id/add_sport"
+        android:title="@string/add_sport" />
+
 </menu>
