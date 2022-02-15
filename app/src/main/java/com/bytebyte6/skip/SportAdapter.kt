@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bytebyte6.skip.data.Sport
 import com.bytebyte6.skip.data.TrainingWay
-import com.bytebyte6.skip.data.getTimeString
 import com.bytebyte6.skip.databinding.ItemSportByGroupBinding
 import com.bytebyte6.skip.databinding.ItemSportByTimeBinding
 
@@ -44,21 +43,24 @@ class SportAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private fun initByTime(holder: TimeViewHolder,sport: Sport) {
         holder.binding.run {
-            tvName.text = sport.name
-            tvMinDuration.text = root.context.getString(R.string.duration_min_s,sport.minDuration)
-            tvMaxDuration.text = root.context.getString(R.string.duration_max_s,sport.maxDuration)
-            tvRestDuration.text = root.context.getString(R.string.rest_duration,root.context.getTimeString(sport.restDuration))
+            tvName.text = root.context.getString(R.string.sport_name_s,sport.name)
+            tvMinDuration.text = root.context.getString(R.string.duration_min_s,root.context.getTimeString(sport.minDuration))
+            tvMaxDuration.text = root.context.getString(R.string.duration_max_s,root.context.getTimeString(sport.maxDuration))
+            tvRestDuration.text = root.context.getString(R.string.rest_duration_s,root.context.getTimeString(sport.restDuration))
         }
     }
 
     private fun initByGroup(holder: GroupViewHolder,sport: Sport) {
         holder.binding.run {
-            tvName.text = sport.name
-            tvMinGroup.text = root.context.getString(R.string.min_group_s,root.context.getTimeString(sport.minGroup))
-            tvMaxGroup.text = root.context.getString(R.string.max_group_s,root.context.getTimeString(sport.maxGroup))
-            tvMinCount.text = root.context.getString(R.string.min_count_s,root.context.getTimeString(sport.minCount))
-            tvMaxCount.text = root.context.getString(R.string.max_count_s,root.context.getTimeString(sport.maxCount))
-            tvRestDuration.text = root.context.getString(R.string.rest_duration,root.context.getTimeString(sport.restDuration))
+            tvName.text = root.context.getString(R.string.sport_name_s,sport.name)
+            tvMinGroup.text = root.context.getString(R.string.min_group_d,(sport.minGroup))
+            tvMaxGroup.text = root.context.getString(R.string.max_group_d,(sport.maxGroup))
+            tvMinCount.text = root.context.getString(R.string.min_count_d,(sport.minCount))
+            tvMaxCount.text = root.context.getString(R.string.max_count_d,(sport.maxCount))
+            tvRestDuration.text = root.context.getString(
+                R.string.rest_duration_s,
+                root.context.getTimeString(sport.restDuration)
+            )
         }
     }
 

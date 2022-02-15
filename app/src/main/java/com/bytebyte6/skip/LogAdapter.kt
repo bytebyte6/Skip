@@ -27,11 +27,7 @@ class LogAdapter : RecyclerView.Adapter<LogAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val entity = list[position]
-        holder.binding.tvPackageName.text = entity.packageName
-        holder.binding.tvCount.text = entity.count.toString()
-        holder.binding.tvIsClickable.text = entity.isClickable.toString()
-        holder.binding.tvParentClickable.text = entity.parentIsClickable.toString()
-        holder.binding.tvText.text = entity.text
+        holder.binding.tvLog.text = entity.toString()
     }
 
     override fun getItemCount(): Int {

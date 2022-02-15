@@ -10,46 +10,46 @@ data class Sport(
     /**
      * 运动名称
      */
-    val name: String,
+    var name: String = "",
     /**
      * 最小持续时间 s
      */
-    val minDuration: Int,
+    var minDuration: Int = -1,
     /**
      * 最大持续时间 s
      */
-    val maxDuration: Int,
+    var maxDuration: Int = -1,
     /**
      * 0 按时间
      * 1 按组数
      */
-    val trainingWay:Int,
+    var trainingWay: Int = TrainingWay.BY_TIME,
     /**
      * 最小次数
      */
-    val minCount: Int,
+    var minCount: Int = -1,
     /**
      * 最小组数
      */
-    val minGroup: Int,
+    var minGroup: Int = -1,
     /**
      * 最大次数
      */
-    val maxCount: Int,
+    var maxCount: Int = -1,
     /**
      * 最大组数
      */
-    val maxGroup: Int,
+    var maxGroup: Int = -1,
     /**
      * 组间休息时间 s
      */
-    val groupRestDuration:Int,
+    var groupRestDuration: Int = -1,
     /**
      * 完成这个项目之后的休息时间 s
      */
-    val restDuration: Int,
+    var restDuration: Int = -1,
     /**
      * 是否达标
      */
-    val goal:Boolean=false
+    var goal: Boolean = false
 )
