@@ -32,6 +32,6 @@
         android:id="@+id/tvRestDuration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/rest_duration" />
+        android:text="@string/rest_duration_s" />
 
 </LinearLayout>

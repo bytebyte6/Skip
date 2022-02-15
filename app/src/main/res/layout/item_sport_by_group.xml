@@ -20,30 +20,30 @@
         android:id="@+id/tvMinCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/min_count_s" />
+        android:text="@string/min_count_d" />
 
     <TextView
         android:id="@+id/tvMaxCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/max_count_s" />
+        android:text="@string/max_count_d" />
 
     <TextView
         android:id="@+id/tvMinGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/min_group_s" />
+        android:text="@string/min_group_d" />
 
     <TextView
         android:id="@+id/tvMaxGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/max_group_s" />
+        android:text="@string/max_group_d" />
 
     <TextView
         android:id="@+id/tvRestDuration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/rest_duration" />
+        android:text="@string/rest_duration_s" />
 
 </LinearLayout>
