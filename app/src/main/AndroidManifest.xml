@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.bytebyte6.skip">
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+
     <application
         android:name=".App"
         android:allowBackup="false"
@@ -12,22 +14,23 @@
         android:theme="@style/Theme.Skip">
         <activity android:name=".MainActivity"
             android:exported="true">
+
+        </activity>
+        <activity android:name=".LogActivity" />
+        <activity android:name=".AccountActivity" />
+        <activity android:name=".TodayTrainingActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LogActivity" />
-        <activity android:name=".AccountActivity" />
-        <activity android:name=".TodayTrainingActivity"
-            android:exported="true">
-
-        </activity>
         <activity android:name=".SportListActivity" />
         <activity android:name=".AddSportActivity" />
 
         <service
+            android:foregroundServiceType="mediaPlayback"
             android:process=":skip"
             android:enabled="true"
             android:name=".SkipService"

@@ -11,8 +11,8 @@ interface SportPlanDao {
     @Update(onConflict = OnConflictStrategy.REPLACE)
     fun update(sportPlan: SportPlan)
 
-    @Query("SELECT * FROM SportPlan WHERE id=:id")
-    fun get(id: Int): SportPlan?
+    @Query("SELECT * FROM SportPlan WHERE date=:date")
+    fun get(date: Long): SportPlan?
 
     @Query("SELECT * FROM SportPlan")
     fun list(): LiveData<List<SportPlan>>

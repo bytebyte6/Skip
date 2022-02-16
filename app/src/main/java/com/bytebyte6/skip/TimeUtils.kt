@@ -1,7 +1,7 @@
 package com.bytebyte6.skip
 
 import android.content.Context
-import com.bytebyte6.skip.R
+import java.util.*
 
 fun Context.getTimeString(second: Int): String {
     return if (second < 60) {
@@ -11,4 +11,13 @@ fun Context.getTimeString(second: Int): String {
     } else {
         getString(R.string.minute_second_d, second / 60, second % 60)
     }
+}
+
+fun getsTheZeroTimeStamp(): Long {
+    val calendar = Calendar.getInstance()
+    calendar.set(Calendar.MINUTE,0)
+    calendar.set(Calendar.SECOND,0)
+    calendar.set(Calendar.HOUR_OF_DAY,0)
+    calendar.set(Calendar.MILLISECOND,0)
+    return calendar.timeInMillis
 }

@@ -8,22 +8,12 @@ class Converter {
     private val gson = Gson()
 
     @TypeConverter
-    fun sportToJson(sport: Sport): String {
+    fun listToJson(sport: List<RealSport>): String {
         return gson.toJson(sport)
     }
 
     @TypeConverter
-    fun jsonToSport(json: String): Sport {
-        return gson.fromJson(json, Sport::class.java)
-    }
-
-    @TypeConverter
-    fun listToJson(sport: List<Sport>): String {
-        return gson.toJson(sport)
-    }
-
-    @TypeConverter
-    fun jsonToList(json: String): List<Sport> {
-        return gson.fromJson(json, object : TypeToken<List<Sport>>(){}.type)
+    fun jsonToList(json: String): List<RealSport> {
+        return gson.fromJson(json, object : TypeToken<List<RealSport>>(){}.type)
     }
 }

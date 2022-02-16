@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.bytebyte6.skip.data.AppDataBase
 import com.bytebyte6.skip.data.Sport
 import com.bytebyte6.skip.data.TrainingWay

@@ -1,8 +1,10 @@
 package com.bytebyte6.skip
 
+import com.bytebyte6.skip.data.Data
 import org.junit.Test
 
 import org.junit.Assert.*
+import java.util.*
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -11,9 +13,9 @@ import org.junit.Assert.*
  */
 class ExampleUnitTest {
     @Test
-    fun addition_isCorrect() {
-        println("跳过广告 | 4s".length)
-        println(System.currentTimeMillis()/1000)
-        assertEquals(4, 2 + 2)
+    fun test() {
+        Data.sports.forEach {
+            println(Data.getRealSport(it))
+        }
     }
 }
