@@ -40,48 +40,5 @@ class TodayTrainingActivity : AppCompatActivity() {
                 realSportAdapter.update(it.list)
             }
         })
-
-        val newSingleThreadExecutor = Executors.newSingleThreadExecutor()
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            BiometricPrompt.Builder(this)
-                .setTitle("F")
-                .setNegativeButton("F", newSingleThreadExecutor, { _, _ -> })
-                .build()
-                .authenticate(
-                    CancellationSignal(),
-                    newSingleThreadExecutor,
-                    object : BiometricPrompt.AuthenticationCallback() {
-                        override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult?) {
-                            super.onAuthenticationSucceeded(result)
-                            Toast.makeText(
-                                application,
-                                "onAuthenticationSucceeded",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-
-                        override fun onAuthenticationError(
-                            errorCode: Int,
-                            errString: CharSequence?
-                        ) {
-                            super.onAuthenticationError(errorCode, errString)
-                            Log.e("TAG", "onAuthenticationError: $errString $errorCode ")
-                        }
-
-                        override fun onAuthenticationFailed() {
-                            super.onAuthenticationFailed()
-                            Log.e("TAG", "onAuthenticationFailed: ")
-                        }
-
-                        override fun onAuthenticationHelp(
-                            helpCode: Int,
-                            helpString: CharSequence?
-                        ) {
-                            super.onAuthenticationHelp(helpCode, helpString)
-                            Log.d("TAG", "onAuthenticationHelp: ")
-                        }
-                    })
-        }
     }
 }
