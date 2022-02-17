@@ -14,15 +14,15 @@ data class SportPlan(
     /**
      * 运动总时长
      */
-    val duration: Int,
+    val duration: Int = 0,
     /**
-     * 菜单
+     * 彩蛋
      */
     val egg: Boolean = false,
     /**
      * 运动项目列表
      */
-    val list: List<Sport> = emptyList(),
+    val list: List<RealSport> = emptyList(),
     /**
      * 是否达标
      */

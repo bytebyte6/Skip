@@ -17,15 +17,17 @@ import java.util.concurrent.Executors
 class SkipService : AccessibilityService() {
 
     companion object {
-        const val PING = "AccessibilityPING"
-        const val PONG = "AccessibilityPONG"
+        const val PING = "PING"
+        const val PONG = "PONG"
         const val TAG = "SkipService"
         const val NOTIFICATION_ID = 8
     }
 
     private val pingReceiver = PingReceiver()
 
-    private var appDataBase: AppDataBase? = null
+    private val appDataBase by lazy {
+        AppDataBase.getAppDataBase(this)
+    }
 
     private val executorService: ExecutorService = Executors.newSingleThreadExecutor()
 
@@ -34,7 +36,6 @@ class SkipService : AccessibilityService() {
         registerReceiver(pingReceiver, IntentFilter(PING))
         sendBroadcast(Intent(PONG))
         Log.d(TAG, "onCreate")
-        appDataBase = AppDataBase.getAppDataBase(this)
         val notification = Notify.with(this)
             .content {
                 title = getString(R.string.skip_service_enable)
@@ -57,13 +58,12 @@ class SkipService : AccessibilityService() {
     }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
-        if (event != null &&
-            event.eventType != TYPE_VIEW_CLICKED &&
-            event.packageName != null &&
-            !event.packageName.contains("setting") &&
-            !event.packageName.contains("settings")
-        ) {
-            val list = event.source?.findAccessibilityNodeInfosByText(getString(R.string.skip))
+        val pass = event != null
+                && event.eventType != TYPE_VIEW_CLICKED
+                && event.packageName != null
+                && !event.packageName.contains("setting")
+        if (pass) {
+            val list = event!!.source?.findAccessibilityNodeInfosByText(getString(R.string.skip))
             list?.forEach {
                 if (it.text != null && it.text.length <= 9) {
                     if (it.isClickable) {
@@ -76,32 +76,32 @@ class SkipService : AccessibilityService() {
                             Log.d(TAG, "Click parent: ${parent.text}")
                         }
                     }
-                    updateDb(it, list.size)
                 }
+                updateDb(it, list.size)
             }
         }
     }
 
     private fun updateDb(nodeInfo: AccessibilityNodeInfo, nodeSize: Int) {
         executorService.execute {
-            appDataBase?.run {
-                val packageName = nodeInfo.packageName.toString()
-                val entity = logDao().get(packageName)
-                if (entity == null) {
-                    val count = if (nodeInfo.isClickable || nodeInfo.parent?.isClickable == true) {
-                        1
-                    } else {
-                        0
-                    }
-                    logDao().insert(createLog(count, nodeSize, nodeInfo))
+            val logDao = appDataBase.logDao()
+            val packageName = nodeInfo.packageName.toStringOrEmpty()
+            val entity = logDao.get(packageName)
+            val parent = nodeInfo.parent
+            if (entity == null) {
+                val count = if (nodeInfo.isClickable || parent?.isClickable == true) {
+                    1
                 } else {
-                    val count = if (nodeInfo.isClickable || nodeInfo.parent?.isClickable == true) {
-                        entity.count + 1
-                    } else {
-                        entity.count
-                    }
-                    logDao().update(createLog(count, nodeSize, nodeInfo))
+                    0
                 }
+                logDao.insert(createLog(count, nodeSize, nodeInfo))
+            } else {
+                val count = if (nodeInfo.isClickable || parent?.isClickable == true) {
+                    entity.count + 1
+                } else {
+                    entity.count
+                }
+                logDao.update(createLog(count, nodeSize, nodeInfo))
             }
         }
     }
@@ -111,19 +111,21 @@ class SkipService : AccessibilityService() {
         nodeSize: Int,
         nodeInfo: AccessibilityNodeInfo
     ): com.bytebyte6.skip.data.Log {
-        var className = nodeInfo.className.toString()
-        if (nodeInfo.parent != null) {
-            className = className.plus(" ").plus(nodeInfo.parent.className.toString())
-            if (nodeInfo.parent.parent != null) {
-                className = className.plus(" ").plus(nodeInfo.parent.parent.className.toString())
+        var className = nodeInfo.className.toStringOrEmpty()
+        val parent = nodeInfo.parent
+        if (parent != null) {
+            className = className.plus(" ").plus(parent.className.toStringOrEmpty())
+            val parentParent = parent.parent
+            if (parentParent != null) {
+                className = className.plus(" ").plus(parentParent.className.toStringOrEmpty())
             }
         }
         return com.bytebyte6.skip.data.Log(
-            packageName = nodeInfo.packageName.toString(),
+            packageName = nodeInfo.packageName.toStringOrEmpty(),
             count = count,
             isClickable = nodeInfo.isClickable,
-            parentIsClickable = nodeInfo.parent?.isClickable ?: false,
-            text = nodeInfo.text.toString(),
+            parentIsClickable = parent?.isClickable ?: false,
+            text = nodeInfo.text.toStringOrEmpty(),
             nodeSize = nodeSize,
             className = className
         )

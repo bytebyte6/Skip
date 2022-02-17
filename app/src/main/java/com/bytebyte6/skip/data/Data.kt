@@ -1,6 +1,48 @@
 package com.bytebyte6.skip.data
 
+import com.bytebyte6.skip.getsTheZeroTimeStamp
+import kotlin.random.Random
+
 object Data {
+
+    fun randomSportPlan(list: List<Sport>): SportPlan {
+        val realList = mutableListOf<RealSport>()
+        if (list.size > 5) {
+            for (i in 0..4) {
+                val sport = list[Random.nextInt(list.size)]
+                realList.add(getRealSport(sport))
+            }
+        } else {
+            list.forEach {
+                realList.add(getRealSport(it))
+            }
+        }
+
+        return SportPlan(
+            date = getsTheZeroTimeStamp(),
+            list = realList
+        )
+    }
+
+    fun getRealSport(sport: Sport): RealSport {
+        if (sport.trainingWay == TrainingWay.BY_TIME) {
+            return RealSport(
+                name = sport.name,
+                trainingWay = sport.trainingWay,
+                restDuration = sport.restDuration,
+                duration = Random.nextInt(sport.minDuration, sport.maxDuration)
+            )
+        } else {
+            return RealSport(
+                name = sport.name,
+                trainingWay = sport.trainingWay,
+                restDuration = sport.restDuration,
+                groupRestDuration = sport.groupRestDuration,
+                count = Random.nextInt(sport.minCount, sport.maxCount),
+                group = Random.nextInt(sport.minGroup, sport.maxGroup)
+            )
+        }
+    }
 
     val sports = mutableListOf<Sport>()
 

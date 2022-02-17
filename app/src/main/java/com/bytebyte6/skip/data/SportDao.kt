@@ -19,4 +19,10 @@ interface SportDao {
 
     @Query("SELECT * FROM Sport")
     fun list(): LiveData<List<Sport>>
+
+    @Query("SELECT * FROM Sport")
+    fun getList(): List<Sport>
+
+    @Query("SELECT COUNT(id) FROM Sport")
+    fun getCount(): Int
 }
