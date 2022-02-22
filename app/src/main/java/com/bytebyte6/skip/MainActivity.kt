@@ -6,8 +6,12 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.biometric.BiometricPrompt
+import com.bytebyte6.skip.data.AppDataBase
 import com.bytebyte6.skip.databinding.ActivityMainBinding
+import javax.crypto.Cipher
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,6 +34,26 @@ class MainActivity : AppCompatActivity() {
             true
         }
         sendBroadcast(Intent(SkipService.PING))
+        decryption()
+    }
+
+    private fun decryption() {
+        AppDataBase.getAppDataBase(this).accountDao().list().observe(this,{
+            if (!it.isNullOrEmpty()){
+                val cryptographyManager = CryptographyManager()
+                val keyName = getString(R.string.secret_key_name)
+                val encryptedBytes: ByteArray = it[0].password
+                val decryptionCipher = cryptographyManager.getInitializedCipherForDecryption(keyName, it[0].iv)
+                val info = BiometricPromptUtils.createPromptInfo(this)
+                val biometricPrompt = BiometricPromptUtils.createBiometricPrompt(this) { result ->
+                    result.cryptoObject?.cipher?.run {
+                        val decryptedString = this.doFinal(encryptedBytes).decodeToString()
+                        Log.d(AccountActivity.TAG, "解密后: $decryptedString")
+                    }
+                }
+                biometricPrompt.authenticate(info, BiometricPrompt.CryptoObject(decryptionCipher))
+            }
+        })
     }
 
     private fun goToSettingsScreen() {

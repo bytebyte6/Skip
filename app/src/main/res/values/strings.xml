@@ -52,4 +52,7 @@
     <string name="empty_tips">请输入</string>
     <string name="node_size">节点数</string>
     <string name="clazz_name">类名</string>
+    <string name="secret_key_name">biometric_sample_encryption_key</string>
+    <string name="prompt_info_title">验证指纹</string>
+    <string name="prompt_info_description">使用指纹加解密账户信息"</string>
 </resources>

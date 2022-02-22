@@ -1,18 +1,16 @@
 package com.bytebyte6.skip
 
-import android.hardware.biometrics.BiometricPrompt
-import android.os.Build
 import android.os.Bundle
-import android.os.CancellationSignal
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.biometric.BiometricPrompt
+import com.bytebyte6.skip.data.Account
 import com.bytebyte6.skip.data.AccountDao
 import com.bytebyte6.skip.data.AppDataBase
 import com.bytebyte6.skip.databinding.ActivityAccountBinding
 import com.google.android.material.textfield.TextInputLayout
-import java.nio.charset.Charset
 import java.util.concurrent.Executors
 
 class AccountActivity : AppCompatActivity() {
@@ -23,6 +21,7 @@ class AccountActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAccountBinding
     private lateinit var accountDao: AccountDao
+    private val cryptographyManager = CryptographyManager()
     private val executorService = Executors.newSingleThreadExecutor()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,61 +69,33 @@ class AccountActivity : AppCompatActivity() {
                     }
                     dismiss()
 
-                    fingerprintVerification(account,password)
+                    encryption(account, password)
                 }
             }
     }
 
-    private fun fingerprintVerification(account: String, password: String) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            BiometricPrompt.Builder(this)
-                .setTitle("验证指纹")
-                .setDescription("使用指纹加解密账户信息")
-                .setNegativeButton(getString(R.string.cancel), executorService, { _, _ -> })
-                .build()
-                .authenticate(
-                    CancellationSignal(),
-                    executorService,
-                    object : BiometricPrompt.AuthenticationCallback() {
-                        override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult?) {
-                            super.onAuthenticationSucceeded(result)
-                            Log.d(TAG, "onAuthenticationSucceeded: ")
-                            result?.run {
-                                Log.d(TAG, "密码是: $password")
-                                val encryptedBytes = cryptoObject.cipher.doFinal(password.toByteArray())
-                                val encryptedString = encryptedBytes.toString(Charset.defaultCharset())
-                                Log.d(TAG, "加密后: $encryptedString")
-                                val decryptedBytes = cryptoObject.cipher.doFinal(encryptedString.toByteArray())
-                                val decryptedString = decryptedBytes.toString(Charset.defaultCharset())
-                                Log.d(TAG, "解密后: $decryptedString")
-                            }
-//                            executorService.execute {
-//                                accountDao.insert(Account(account = account, password = result.cryptoObject.cipher.provider.))
-//                            }
-                        }
-
-                        override fun onAuthenticationError(
-                            errorCode: Int,
-                            errString: CharSequence?
-                        ) {
-                            super.onAuthenticationError(errorCode, errString)
-                            Log.e(TAG, "onAuthenticationError: $errString $errorCode ")
-                        }
-
-                        override fun onAuthenticationFailed() {
-                            super.onAuthenticationFailed()
-                            Log.e(TAG, "onAuthenticationFailed: ")
-                        }
-
-                        override fun onAuthenticationHelp(
-                            helpCode: Int,
-                            helpString: CharSequence?
-                        ) {
-                            super.onAuthenticationHelp(helpCode, helpString)
-                            Log.d(TAG, "onAuthenticationHelp: ")
-                        }
-                    })
+    private fun encryption(account: String, password: String) {
+        val keyName = getString(R.string.secret_key_name)
+        val encryptionCipher = cryptographyManager.getInitializedCipherForEncryption(keyName)
+        val info = BiometricPromptUtils.createPromptInfo(this)
+        val biometricPrompt = BiometricPromptUtils.createBiometricPrompt(this) { result ->
+            result.cryptoObject?.cipher?.run {
+                Log.d(TAG, "密码是: $password")
+                val encryptedBytes = this.doFinal(password.toByteArray())
+                val encryptedString = encryptedBytes?.decodeToString()
+                Log.d(TAG, "加密后: $encryptedString")
+                executorService.execute {
+                    accountDao.insert(
+                        Account(
+                            account = account,
+                            password = encryptedBytes,
+                            iv = this.iv
+                        )
+                    )
+                }
+            }
         }
+        biometricPrompt.authenticate(info, BiometricPrompt.CryptoObject(encryptionCipher))
     }
 
     private fun initRecyclerView() {

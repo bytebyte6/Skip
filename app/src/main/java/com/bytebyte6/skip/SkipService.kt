@@ -69,12 +69,12 @@ class SkipService : AccessibilityService() {
                     if (it.isClickable) {
                         it.performAction(AccessibilityNodeInfo.ACTION_CLICK)
                         Log.d(TAG, "Click: ${it.text}")
+                    } else if (it.parent != null && it.parent.isClickable) {
+                        it.parent.performAction(AccessibilityNodeInfo.ACTION_CLICK)
+                        Log.d(TAG, "Click parent: ${it.parent.text}")
                     } else {
-                        val parent = it.parent
-                        if (parent != null && parent.isClickable) {
-                            parent.performAction(AccessibilityNodeInfo.ACTION_CLICK)
-                            Log.d(TAG, "Click parent: ${parent.text}")
-                        }
+                        // anyway
+                        it.performAction(AccessibilityNodeInfo.ACTION_CLICK)
                     }
                 }
                 updateDb(it, list.size)

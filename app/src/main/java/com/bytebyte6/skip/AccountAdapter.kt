@@ -28,7 +28,7 @@ class AccountAdapter : RecyclerView.Adapter<AccountAdapter.ViewHolder>() {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val entity = list[position]
         holder.binding.tvAccount.text = entity.account
-        holder.binding.tvPassword.text = entity.password
+//        holder.binding.tvPassword.text = entity.password
     }
 
     override fun getItemCount(): Int {
