@@ -5,6 +5,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import com.bytebyte6.skip.data.Account
 import com.bytebyte6.skip.data.AccountDao
@@ -35,7 +36,15 @@ class AccountActivity : AppCompatActivity() {
 
     private fun initToolbar() {
         binding.toolbar.setOnMenuItemClickListener {
-            showDialog()
+            val canAuthenticate = BiometricManager
+                .from(applicationContext)
+                .canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK)
+            if (canAuthenticate == BiometricManager.BIOMETRIC_SUCCESS) {
+                showDialog()
+            } else {
+                Toast.makeText(this, getString(R.string.tips_not_add_password_and_fingerprint), Toast.LENGTH_SHORT)
+                    .show()
+            }
             true
         }
     }
@@ -102,9 +111,9 @@ class AccountActivity : AppCompatActivity() {
         val accountAdapter = AccountAdapter()
         binding.recyclerView.adapter = accountAdapter
         AppDataBase.getAppDataBase(this).accountDao().run {
-            list().observe(this@AccountActivity, {
+            list().observe(this@AccountActivity) {
                 accountAdapter.update(it)
-            })
+            }
         }
     }
 }

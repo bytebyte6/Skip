@@ -35,10 +35,10 @@ class TodayTrainingActivity : AppCompatActivity() {
         val realSportAdapter = RealSportAdapter()
         binding.recyclerView.adapter = realSportAdapter
 
-        viewModel.sportPlanUI.observe(this, {
+        viewModel.sportPlanUI.observe(this) {
             if (it != null) {
                 realSportAdapter.update(it.list)
             }
-        })
+        }
     }
 }

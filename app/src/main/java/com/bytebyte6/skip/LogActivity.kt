@@ -22,9 +22,9 @@ class LogActivity : AppCompatActivity() {
             this.adapter = adapter
         }
         AppDataBase.getAppDataBase(this).logDao().apply {
-            this.list().observe(this@LogActivity, {
+            this.list().observe(this@LogActivity) {
                 adapter.update(it)
-            })
+            }
         }
     }
 }

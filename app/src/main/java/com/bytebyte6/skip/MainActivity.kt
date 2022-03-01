@@ -7,11 +7,12 @@ import android.content.IntentFilter
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import com.bytebyte6.skip.data.AppDataBase
 import com.bytebyte6.skip.databinding.ActivityMainBinding
-import javax.crypto.Cipher
 
 class MainActivity : AppCompatActivity() {
 
@@ -38,22 +39,30 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun decryption() {
-        AppDataBase.getAppDataBase(this).accountDao().list().observe(this,{
-            if (!it.isNullOrEmpty()){
-                val cryptographyManager = CryptographyManager()
-                val keyName = getString(R.string.secret_key_name)
-                val encryptedBytes: ByteArray = it[0].password
-                val decryptionCipher = cryptographyManager.getInitializedCipherForDecryption(keyName, it[0].iv)
-                val info = BiometricPromptUtils.createPromptInfo(this)
-                val biometricPrompt = BiometricPromptUtils.createBiometricPrompt(this) { result ->
-                    result.cryptoObject?.cipher?.run {
-                        val decryptedString = this.doFinal(encryptedBytes).decodeToString()
-                        Log.d(AccountActivity.TAG, "解密后: $decryptedString")
+        val canAuthenticate = BiometricManager
+            .from(applicationContext)
+            .canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK)
+        if (canAuthenticate == BiometricManager.BIOMETRIC_SUCCESS) {
+            AppDataBase.getAppDataBase(this).accountDao().list().observe(this,{
+                if (!it.isNullOrEmpty()){
+                    val cryptographyManager = CryptographyManager()
+                    val keyName = getString(R.string.secret_key_name)
+                    val encryptedBytes: ByteArray = it[0].password
+                    val decryptionCipher = cryptographyManager.getInitializedCipherForDecryption(keyName, it[0].iv)
+                    val info = BiometricPromptUtils.createPromptInfo(this)
+                    val biometricPrompt = BiometricPromptUtils.createBiometricPrompt(this) { result ->
+                        result.cryptoObject?.cipher?.run {
+                            val decryptedString = this.doFinal(encryptedBytes).decodeToString()
+                            Log.d(AccountActivity.TAG, "解密后: $decryptedString")
+                        }
                     }
+                    biometricPrompt.authenticate(info, BiometricPrompt.CryptoObject(decryptionCipher))
                 }
-                biometricPrompt.authenticate(info, BiometricPrompt.CryptoObject(decryptionCipher))
-            }
-        })
+            })
+        } else {
+            Toast.makeText(this, getString(R.string.tips_not_add_password_and_fingerprint), Toast.LENGTH_SHORT)
+                .show()
+        }
     }
 
     private fun goToSettingsScreen() {
