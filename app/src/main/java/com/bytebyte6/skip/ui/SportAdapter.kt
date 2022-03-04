@@ -1,14 +1,16 @@
-package com.bytebyte6.skip
+package com.bytebyte6.skip.ui
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bytebyte6.skip.R
 import com.bytebyte6.skip.data.Sport
 import com.bytebyte6.skip.data.TrainingWay
 import com.bytebyte6.skip.databinding.ItemSportByGroupBinding
 import com.bytebyte6.skip.databinding.ItemSportByTimeBinding
+import com.bytebyte6.skip.getTimeString
 
 class SportAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -41,7 +43,7 @@ class SportAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
-    private fun initByTime(holder: TimeViewHolder,sport: Sport) {
+    private fun initByTime(holder: TimeViewHolder, sport: Sport) {
         holder.binding.run {
             tvName.text = root.context.getString(R.string.sport_name_s,sport.name)
             tvMinDuration.text = root.context.getString(R.string.duration_min_s,root.context.getTimeString(sport.minDuration))
@@ -50,7 +52,7 @@ class SportAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
-    private fun initByGroup(holder: GroupViewHolder,sport: Sport) {
+    private fun initByGroup(holder: GroupViewHolder, sport: Sport) {
         holder.binding.run {
             tvName.text = root.context.getString(R.string.sport_name_s,sport.name)
             tvMinGroup.text = root.context.getString(R.string.min_group_d,(sport.minGroup))

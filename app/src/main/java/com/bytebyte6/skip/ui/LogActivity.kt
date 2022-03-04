@@ -1,4 +1,4 @@
-package com.bytebyte6.skip
+package com.bytebyte6.skip.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

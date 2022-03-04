@@ -38,7 +38,7 @@ class HomeFragment : Fragment() {
         }
         binding.toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
-                R.id.account -> startActivity(Intent(requireContext(), AccountActivity::class.java))
+//                R.id.account -> startActivity(Intent(requireContext(), AccountActivity::class.java))
                 R.id.log -> startActivity(Intent(requireContext(), LogActivity::class.java))
             }
             true

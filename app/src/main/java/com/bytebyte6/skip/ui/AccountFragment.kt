@@ -1,7 +1,6 @@
 package com.bytebyte6.skip.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -103,10 +102,7 @@ class AccountFragment : Fragment() {
         val info = BiometricPromptUtils.createPromptInfo(requireActivity())
         val biometricPrompt = BiometricPromptUtils.createBiometricPrompt(requireActivity()) { result ->
             result.cryptoObject?.cipher?.run {
-                Log.d(AccountActivity.TAG, "密码是: $password")
                 val encryptedBytes = this.doFinal(password.toByteArray())
-                val encryptedString = encryptedBytes?.decodeToString()
-                Log.d(AccountActivity.TAG, "加密后: $encryptedString")
                 executorService.execute {
                     AppDataBase.getAppDataBase(requireContext()).accountDao().insert(
                         Account(
@@ -122,7 +118,7 @@ class AccountFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        val accountAdapter = AccountAdapter()
+        val accountAdapter = AccountAdapter(requireActivity(),cryptographyManager)
         binding.recyclerView.adapter = accountAdapter
         AppDataBase.getAppDataBase(requireContext()).accountDao().run {
             list().observe(viewLifecycleOwner) {

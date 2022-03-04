@@ -1,4 +1,4 @@
-package com.bytebyte6.skip
+package com.bytebyte6.skip.ui
 
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import com.bytebyte6.skip.R
 import com.bytebyte6.skip.databinding.ActivityNavigationBinding
 
 class NavigationActivity : AppCompatActivity() {

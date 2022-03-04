@@ -1,12 +1,12 @@
-package com.bytebyte6.skip
+package com.bytebyte6.skip.ui
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.bytebyte6.skip.R
 import com.bytebyte6.skip.data.AppDataBase
 import com.bytebyte6.skip.data.Data
 import com.bytebyte6.skip.databinding.ActivitySportListBinding
-import com.bytebyte6.skip.databinding.ActivityTodayTrainingBinding
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -18,7 +18,7 @@ class SportListActivity : AppCompatActivity() {
         Executors.newSingleThreadExecutor()
     }
 
-    private lateinit var adapter:SportAdapter
+    private lateinit var adapter: SportAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

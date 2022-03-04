@@ -1,4 +1,4 @@
-package com.bytebyte6.skip
+package com.bytebyte6.skip.ui
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -7,6 +7,7 @@ import com.bytebyte6.skip.data.AppDataBase
 import com.bytebyte6.skip.data.Data
 import com.bytebyte6.skip.data.SportDao
 import com.bytebyte6.skip.data.SportPlan
+import com.bytebyte6.skip.getsTheZeroTimeStamp
 import java.util.concurrent.Executors
 
 class TodayTrainingViewModel(application: Application) : AndroidViewModel(application) {
