@@ -20,7 +20,7 @@
     <string name="cancel">取消</string>
     <string name="enter">确认</string>
     <string name="account_manager">账号管理</string>
-    <string name="today_plan">今日训练计划</string>
+    <string name="today_plan">今日随机训练计划</string>
     <string name="sport_list">运动列表</string>
     <string name="add_sport">添加运动</string>
     <string name="training_way">训练方式</string>
@@ -58,4 +58,8 @@
     <string name="tips_not_add_password_and_fingerprint">您的手机还没有添加指纹和密码，请先在系统设置里添加。</string>
     <string name="name_s_duration_s"><![CDATA[%s 持续时间<b>%s</b> 休息时间<b>%s</b>]]></string>
     <string name="name_s_group_d_count_d"><![CDATA[%s <b>%d</b>组 每组<b>%d</b>次 组间休息 <b>%s</b>]]></string>
+    <string name="title_activity_navigation">NavigationActivity</string>
+    <string name="title_home">首页</string>
+    <string name="title_random_training">训练</string>
+    <string name="title_account">账户</string>
 </resources>

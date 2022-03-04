@@ -4,11 +4,12 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentActivity
 
 object BiometricPromptUtils {
     private const val TAG = "BiometricPromptUtils"
     fun createBiometricPrompt(
-        activity: AppCompatActivity,
+        activity: FragmentActivity,
         processSuccess: (BiometricPrompt.AuthenticationResult) -> Unit
     ): BiometricPrompt {
         val executor = ContextCompat.getMainExecutor(activity)
@@ -34,7 +35,7 @@ object BiometricPromptUtils {
         return BiometricPrompt(activity, executor, callback)
     }
 
-    fun createPromptInfo(activity: AppCompatActivity): BiometricPrompt.PromptInfo =
+    fun createPromptInfo(activity: FragmentActivity): BiometricPrompt.PromptInfo =
         BiometricPrompt.PromptInfo.Builder().apply {
             setTitle(activity.getString(R.string.prompt_info_title))
             setDescription(activity.getString(R.string.prompt_info_description))

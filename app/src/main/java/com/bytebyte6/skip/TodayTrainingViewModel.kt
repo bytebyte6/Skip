@@ -37,7 +37,7 @@ class TodayTrainingViewModel(application: Application) : AndroidViewModel(applic
         val sportPlanDao = appDataBase.sportPlanDao()
         val sportPlan = sportPlanDao.get(timeInMillis)
         if (sportPlan == null) {
-            sportPlanDao.insert(Data.randomSportPlan(sportDao.getList()))
+            sportPlanDao.insert(Data.randomSportPlan(sportDao.random()))
             this.sportPlan.postValue(sportPlanDao.get(timeInMillis))
         } else {
             this.sportPlan.postValue(sportPlan)
