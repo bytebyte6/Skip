@@ -25,4 +25,10 @@ interface SportDao {
 
     @Query("SELECT COUNT(id) FROM Sport")
     fun getCount(): Int
+
+    @Query("SELECT MAX(id) FROM Sport")
+    fun maxId(): Int
+
+    @Query("SELECT * FROM Sport ORDER BY RANDOM() LIMIT 5")
+    fun random(): List<Sport>
 }

@@ -1,10 +1,11 @@
-package com.bytebyte6.skip
+package com.bytebyte6.skip.ui
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bytebyte6.skip.R
 import com.bytebyte6.skip.data.Log
 import com.bytebyte6.skip.databinding.ItemLogBinding
 

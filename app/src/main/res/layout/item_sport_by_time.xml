@@ -1,37 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    app:cardElevation="8dp"
+    app:cardCornerRadius="8dp"
+    android:layout_margin="8dp"
+    app:contentPadding="8dp">
 
-    <TextView
-        android:id="@+id/tvName"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/sport_name" />
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tvTrainingWay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/way_by_time" />
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sport_name" />
 
-    <TextView
-        android:id="@+id/tvMinDuration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/duration_min_s" />
+        <TextView
+            android:id="@+id/tvTrainingWay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/way_by_time" />
 
-    <TextView
-        android:id="@+id/tvMaxDuration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/duration_max_s" />
+        <TextView
+            android:id="@+id/tvMinDuration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/duration_min_s" />
 
-    <TextView
-        android:id="@+id/tvRestDuration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/rest_duration_s" />
+        <TextView
+            android:id="@+id/tvMaxDuration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/duration_max_s" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/tvRestDuration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rest_duration_s" />
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

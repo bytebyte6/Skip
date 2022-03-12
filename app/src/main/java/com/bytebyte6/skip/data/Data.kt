@@ -7,17 +7,9 @@ object Data {
 
     fun randomSportPlan(list: List<Sport>): SportPlan {
         val realList = mutableListOf<RealSport>()
-        if (list.size > 5) {
-            for (i in 0..4) {
-                val sport = list[Random.nextInt(list.size)]
-                realList.add(getRealSport(sport))
-            }
-        } else {
-            list.forEach {
-                realList.add(getRealSport(it))
-            }
+        list.forEach {
+            realList.add(getRealSport(it))
         }
-
         return SportPlan(
             date = getsTheZeroTimeStamp(),
             list = realList

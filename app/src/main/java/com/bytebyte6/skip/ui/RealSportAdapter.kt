@@ -1,14 +1,16 @@
-package com.bytebyte6.skip
+package com.bytebyte6.skip.ui
 
 import android.annotation.SuppressLint
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bytebyte6.skip.data.Log
+import com.bytebyte6.skip.R
 import com.bytebyte6.skip.data.RealSport
-import com.bytebyte6.skip.databinding.ItemLogBinding
+import com.bytebyte6.skip.data.TrainingWay
 import com.bytebyte6.skip.databinding.ItemRealSportBinding
+import com.bytebyte6.skip.getTimeString
 
 class RealSportAdapter : RecyclerView.Adapter<RealSportAdapter.ViewHolder>() {
 
@@ -29,7 +31,26 @@ class RealSportAdapter : RecyclerView.Adapter<RealSportAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val entity = list[position]
-        holder.binding.text.text = entity.toString()
+        val ctx = holder.binding.root.context
+        val checkBox = holder.binding.checkBox
+        if (entity.trainingWay == TrainingWay.BY_GROUP) {
+            val string = ctx.getString(
+                R.string.name_s_group_d_count_d,
+                entity.name,
+                entity.group,
+                entity.count,
+                ctx.getTimeString(entity.groupRestDuration)
+            )
+            checkBox.text = Html.fromHtml(string)
+        } else {
+            val string = ctx.getString(
+                R.string.name_s_duration_s,
+                entity.name,
+                ctx.getTimeString(entity.duration),
+                ctx.getTimeString(entity.restDuration)
+            )
+            checkBox.text = Html.fromHtml(string)
+        }
     }
 
     override fun getItemCount(): Int {

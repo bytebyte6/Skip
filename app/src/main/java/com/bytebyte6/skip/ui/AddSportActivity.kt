@@ -1,9 +1,10 @@
-package com.bytebyte6.skip
+package com.bytebyte6.skip.ui
 
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
+import com.bytebyte6.skip.*
 import com.bytebyte6.skip.data.TrainingWay
 import com.bytebyte6.skip.databinding.ActivityAddSportBinding
 

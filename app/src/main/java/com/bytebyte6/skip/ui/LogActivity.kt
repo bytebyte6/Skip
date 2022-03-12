@@ -1,4 +1,4 @@
-package com.bytebyte6.skip
+package com.bytebyte6.skip.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -22,9 +22,9 @@ class LogActivity : AppCompatActivity() {
             this.adapter = adapter
         }
         AppDataBase.getAppDataBase(this).logDao().apply {
-            this.list().observe(this@LogActivity, {
+            this.list().observe(this@LogActivity) {
                 adapter.update(it)
-            })
+            }
         }
     }
 }

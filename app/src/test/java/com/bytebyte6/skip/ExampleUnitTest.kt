@@ -14,6 +14,8 @@ import java.util.*
 class ExampleUnitTest {
     @Test
     fun test() {
+        println(5f)
+        println(5.0f)
         Data.sports.forEach {
             println(Data.getRealSport(it))
         }

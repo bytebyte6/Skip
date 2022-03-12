@@ -1,9 +1,10 @@
-package com.bytebyte6.skip
+package com.bytebyte6.skip.ui
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.bytebyte6.skip.Event
 import com.bytebyte6.skip.data.AppDataBase
 import com.bytebyte6.skip.data.Sport
 import com.bytebyte6.skip.data.TrainingWay

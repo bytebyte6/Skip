@@ -1,4 +1,4 @@
-package com.bytebyte6.skip
+package com.bytebyte6.skip.ui
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -7,6 +7,7 @@ import com.bytebyte6.skip.data.AppDataBase
 import com.bytebyte6.skip.data.Data
 import com.bytebyte6.skip.data.SportDao
 import com.bytebyte6.skip.data.SportPlan
+import com.bytebyte6.skip.getsTheZeroTimeStamp
 import java.util.concurrent.Executors
 
 class TodayTrainingViewModel(application: Application) : AndroidViewModel(application) {
@@ -37,7 +38,7 @@ class TodayTrainingViewModel(application: Application) : AndroidViewModel(applic
         val sportPlanDao = appDataBase.sportPlanDao()
         val sportPlan = sportPlanDao.get(timeInMillis)
         if (sportPlan == null) {
-            sportPlanDao.insert(Data.randomSportPlan(sportDao.getList()))
+            sportPlanDao.insert(Data.randomSportPlan(sportDao.random()))
             this.sportPlan.postValue(sportPlanDao.get(timeInMillis))
         } else {
             this.sportPlan.postValue(sportPlan)
