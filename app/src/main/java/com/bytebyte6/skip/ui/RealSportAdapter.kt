@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bytebyte6.skip.R
 import com.bytebyte6.skip.data.RealSport
 import com.bytebyte6.skip.data.TrainingWay
+import com.bytebyte6.skip.data.byGroup
 import com.bytebyte6.skip.databinding.ItemRealSportBinding
 import com.bytebyte6.skip.getTimeString
 
@@ -34,7 +35,7 @@ class RealSportAdapter : RecyclerView.Adapter<RealSportAdapter.ViewHolder>() {
         val ctx = holder.binding.root.context
         val checkBox = holder.binding.checkBox
         val text = holder.binding.text
-        if (entity.trainingWay == TrainingWay.BY_GROUP) {
+        if (entity.trainingWay.byGroup()) {
             val string = ctx.getString(
                 R.string.name_s_group_d_count_d,
                 entity.name,

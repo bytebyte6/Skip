@@ -8,6 +8,7 @@ import com.bytebyte6.skip.*
 import com.bytebyte6.skip.data.AppDataBase
 import com.bytebyte6.skip.data.Sport
 import com.bytebyte6.skip.data.TrainingWay
+import com.bytebyte6.skip.data.byGroup
 import com.bytebyte6.skip.databinding.ActivityAddSportBinding
 
 class AddSportActivity : AppCompatActivity() {
@@ -156,7 +157,7 @@ class AddSportActivity : AppCompatActivity() {
 
     private fun ActivityAddSportBinding.recover(sport: Sport) {
         binding.etSportName.postDelayed({
-            if (sport.trainingWay == TrainingWay.BY_GROUP) {
+            if (sport.trainingWay.byGroup()) {
                 radioGroup.check(R.id.rbGroup)
                 setupByGroup()
             } else {
