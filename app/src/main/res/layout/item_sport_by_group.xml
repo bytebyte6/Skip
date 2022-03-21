@@ -5,7 +5,8 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:layout_margin="8dp"
-    app:cardElevation="8dp"
+    android:foreground="?selectableItemBackgroundBorderless"
+    app:cardElevation="0dp"
     app:cardCornerRadius="8dp"
     app:contentPadding="8dp">
 
@@ -16,42 +17,49 @@
         android:orientation="vertical">
 
         <TextView
+            style="@style/ListItemSubTitleStyle"
             android:id="@+id/tvName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/sport_name" />
 
         <TextView
+            style="@style/ListItemBodyStyle"
             android:id="@+id/tvTrainingWay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/way_by_group" />
 
         <TextView
+            style="@style/ListItemBodyStyle"
             android:id="@+id/tvMinCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/min_count_d" />
 
         <TextView
+            style="@style/ListItemBodyStyle"
             android:id="@+id/tvMaxCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/max_count_d" />
 
         <TextView
+            style="@style/ListItemBodyStyle"
             android:id="@+id/tvMinGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/min_group_d" />
 
         <TextView
+            style="@style/ListItemBodyStyle"
             android:id="@+id/tvMaxGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/max_group_d" />
 
         <TextView
+            style="@style/ListItemBodyStyle"
             android:id="@+id/tvRestDuration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

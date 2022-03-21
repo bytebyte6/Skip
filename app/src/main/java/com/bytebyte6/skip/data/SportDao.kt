@@ -17,6 +17,9 @@ interface SportDao {
     @Query("SELECT * FROM Sport WHERE id=:id")
     fun get(id: Int): Sport?
 
+    @Query("SELECT * FROM Sport WHERE id=:id")
+    fun liveData(id: Int): LiveData<Sport>
+
     @Query("SELECT * FROM Sport")
     fun list(): LiveData<List<Sport>>
 

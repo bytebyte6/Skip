@@ -1,6 +1,10 @@
 package com.bytebyte6.skip.ui
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,7 +44,7 @@ class AccountAdapter(
         val entity = list[position]
         holder.binding.tvAccount.text = entity.account
         holder.binding.root.setOnClickListener {
-            decryption(entity,holder.binding.tvPassword)
+            decryption(entity)
         }
     }
 
@@ -48,7 +52,7 @@ class AccountAdapter(
         return list.size
     }
 
-    private fun decryption(account: Account, tvPassword: TextView) {
+    private fun decryption(account: Account) {
         val canAuthenticate = BiometricManager
             .from(activity)
             .canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK)
@@ -62,7 +66,7 @@ class AccountAdapter(
                 BiometricPromptUtils.createBiometricPrompt(activity) { result ->
                     result.cryptoObject?.cipher?.run {
                         val decryptedString = this.doFinal(encryptedBytes).decodeToString()
-                        tvPassword.text = decryptedString
+                        showDialog(decryptedString)
                     }
                 }
             biometricPrompt.authenticate(info, BiometricPrompt.CryptoObject(decryptionCipher))
@@ -74,6 +78,20 @@ class AccountAdapter(
             )
                 .show()
         }
+    }
+
+    private fun showDialog(decryptedString: String) {
+        AlertDialog.Builder(activity)
+            .setMessage(decryptedString)
+            .setPositiveButton(R.string.copy) { _, _ ->
+                val clipboard =
+                    activity.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                clipboard.setPrimaryClip(
+                    ClipData.newPlainText("text", decryptedString)
+                )
+            }
+            .create()
+            .show()
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

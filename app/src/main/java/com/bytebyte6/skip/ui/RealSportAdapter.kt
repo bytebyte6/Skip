@@ -33,6 +33,7 @@ class RealSportAdapter : RecyclerView.Adapter<RealSportAdapter.ViewHolder>() {
         val entity = list[position]
         val ctx = holder.binding.root.context
         val checkBox = holder.binding.checkBox
+        val text = holder.binding.text
         if (entity.trainingWay == TrainingWay.BY_GROUP) {
             val string = ctx.getString(
                 R.string.name_s_group_d_count_d,
@@ -41,7 +42,7 @@ class RealSportAdapter : RecyclerView.Adapter<RealSportAdapter.ViewHolder>() {
                 entity.count,
                 ctx.getTimeString(entity.groupRestDuration)
             )
-            checkBox.text = Html.fromHtml(string)
+            text.text = Html.fromHtml(string)
         } else {
             val string = ctx.getString(
                 R.string.name_s_duration_s,
@@ -49,7 +50,7 @@ class RealSportAdapter : RecyclerView.Adapter<RealSportAdapter.ViewHolder>() {
                 ctx.getTimeString(entity.duration),
                 ctx.getTimeString(entity.restDuration)
             )
-            checkBox.text = Html.fromHtml(string)
+            text.text = Html.fromHtml(string)
         }
     }
 

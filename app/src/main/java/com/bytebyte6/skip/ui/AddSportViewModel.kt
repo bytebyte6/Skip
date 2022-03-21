@@ -46,9 +46,9 @@ class AddSportViewModel(application: Application) : AndroidViewModel(application
     private val restDuration = MutableLiveData<Event<Any>>()
     val restDurationError: LiveData<Event<Any>> = restDuration
 
-    val sport = Sport()
+    var sport = Sport()
 
-    fun addSport() {
+    fun save(id: Int) {
         var pass = true
         if (sport.name.isEmpty()) {
             name.value = Event(error)
@@ -91,11 +91,14 @@ class AddSportViewModel(application: Application) : AndroidViewModel(application
         }
         if (pass) {
             executorService.execute {
-                AppDataBase.getAppDataBase(getApplication())
+                val sportDao = AppDataBase.getAppDataBase(getApplication())
                     .sportDao()
-                    .insert(sport)
+                if (id == -1) {
+                    sportDao.insert(sport)
+                } else {
+                    sportDao.update(sport)
+                }
             }
         }
-
     }
 }
