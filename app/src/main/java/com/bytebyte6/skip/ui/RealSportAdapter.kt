@@ -12,8 +12,10 @@ import com.bytebyte6.skip.data.TrainingWay
 import com.bytebyte6.skip.data.byGroup
 import com.bytebyte6.skip.databinding.ItemRealSportBinding
 import com.bytebyte6.skip.getTimeString
+import com.bytebyte6.skip.randomColor
+import com.bytebyte6.skip.randomColorByNightMode
 
-class RealSportAdapter : RecyclerView.Adapter<RealSportAdapter.ViewHolder>() {
+class RealSportAdapter(private val viewModel: TodayTrainingViewModel) : RecyclerView.Adapter<RealSportAdapter.ViewHolder>() {
 
     private val list = mutableListOf<RealSport>()
 
@@ -53,6 +55,11 @@ class RealSportAdapter : RecyclerView.Adapter<RealSportAdapter.ViewHolder>() {
             )
             text.text = Html.fromHtml(string)
         }
+        checkBox.isChecked = entity.goal
+        checkBox.setOnCheckedChangeListener { _, _ ->
+            viewModel.check(position)
+        }
+        holder.binding.cardView.setCardBackgroundColor(randomColorByNightMode())
     }
 
     override fun getItemCount(): Int {

@@ -40,7 +40,7 @@ class RandomTrainingFragment : Fragment() {
             true
         }
 
-        val realSportAdapter = RealSportAdapter()
+        val realSportAdapter = RealSportAdapter(viewModel)
         binding.recyclerView.adapter = realSportAdapter
 
         viewModel.sportPlanUI.observe(viewLifecycleOwner) {

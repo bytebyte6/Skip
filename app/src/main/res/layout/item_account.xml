@@ -15,14 +15,22 @@
     android:layout_height="56dp"
     android:focusable="true">
 
+    <ImageView
+        android:src="@drawable/ic_baseline_apps_24"
+        android:layout_marginStart="16dp"
+        android:layout_gravity="center_vertical"
+        android:id="@+id/imageView"
+        android:contentDescription="@string/image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
     <TextView
         style="@style/ListItemStyle"
         android:id="@+id/tvAccount"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
-        android:layout_weight="1"
-        android:padding="16dp"
+        android:layout_marginStart="56dp"
         tools:text="@string/app_name" />
 
 </com.google.android.material.card.MaterialCardView>

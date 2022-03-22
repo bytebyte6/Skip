@@ -1,6 +1,7 @@
 package com.bytebyte6.skip.ui
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.bytebyte6.skip.data.AppDataBase
@@ -42,6 +43,17 @@ class TodayTrainingViewModel(application: Application) : AndroidViewModel(applic
             this.sportPlan.postValue(sportPlanDao.get(timeInMillis))
         } else {
             this.sportPlan.postValue(sportPlan)
+        }
+    }
+
+    fun check(pos:Int){
+        sportPlanUI.value?.run {
+            val item = this.list[pos]
+            item.goal = !item.goal
+            executorService.execute {
+                val sportPlanDao = appDataBase.sportPlanDao()
+                sportPlanDao.update(this)
+            }
         }
     }
 }

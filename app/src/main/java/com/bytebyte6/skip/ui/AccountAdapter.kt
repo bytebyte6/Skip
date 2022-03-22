@@ -8,15 +8,12 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.bytebyte6.skip.BiometricPromptUtils
-import com.bytebyte6.skip.CryptographyManager
-import com.bytebyte6.skip.R
+import com.bytebyte6.skip.*
 import com.bytebyte6.skip.data.Account
 import com.bytebyte6.skip.databinding.ItemAccountBinding
 
@@ -46,6 +43,9 @@ class AccountAdapter(
         holder.binding.root.setOnClickListener {
             decryption(entity)
         }
+        holder.binding.imageView.setImageResource(getImage())
+        holder.binding.cardView.strokeColor = randomColorByNightMode()
+        holder.binding.cardView.strokeWidth = 4
     }
 
     override fun getItemCount(): Int {
