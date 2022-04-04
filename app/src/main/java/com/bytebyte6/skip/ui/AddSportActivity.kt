@@ -5,10 +5,17 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
 import com.bytebyte6.skip.*
+import com.bytebyte6.skip.data.AppDataBase
+import com.bytebyte6.skip.data.Sport
 import com.bytebyte6.skip.data.TrainingWay
+import com.bytebyte6.skip.data.byGroup
 import com.bytebyte6.skip.databinding.ActivityAddSportBinding
 
 class AddSportActivity : AppCompatActivity() {
+
+    companion object {
+        const val KEY_ID = "ID"
+    }
 
     private lateinit var binding: ActivityAddSportBinding
 
@@ -19,39 +26,64 @@ class AddSportActivity : AppCompatActivity() {
         binding = ActivityAddSportBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val id = intent.getIntExtra(KEY_ID, -1)
+
         binding.run {
             toolbar.setOnMenuItemClickListener {
-                viewModel.addSport()
+                viewModel.save(id)
+                finish()
                 true
             }
             setupCheckChangeListener()
             setupTextWatcher()
         }
         setupObserver()
+        // 编辑模式
+        recoverIfIdNotEmpty(id)
+    }
+
+    private fun recoverIfIdNotEmpty(id: Int) {
+        if (id != -1) {
+            AppDataBase.getAppDataBase(this)
+                .sportDao()
+                .liveData(id)
+                .observe(this) {
+                    viewModel.sport = it
+                    binding.recover(it)
+                }
+        }
     }
 
     private fun ActivityAddSportBinding.setupCheckChangeListener() {
         radioGroup.setOnCheckedChangeListener { _, checkedId ->
             if (checkedId == R.id.rbGroup) {
-                viewModel.sport.trainingWay = TrainingWay.BY_GROUP
-                etMinGroupLayout.isEnabled = true
-                etMaxGroupLayout.isEnabled = true
-                etMinCountLayout.isEnabled = true
-                etMaxCountLayout.isEnabled = true
-                etGroupRestDurationLayout.isEnabled = true
-                etMinDurationLayout.isEnabled = false
-                etMaxDurationLayout.isEnabled = false
+                setupByGroup()
             } else {
-                viewModel.sport.trainingWay = TrainingWay.BY_TIME
-                etMinGroupLayout.isEnabled = false
-                etMaxGroupLayout.isEnabled = false
-                etMinCountLayout.isEnabled = false
-                etMaxCountLayout.isEnabled = false
-                etGroupRestDurationLayout.isEnabled = false
-                etMinDurationLayout.isEnabled = true
-                etMaxDurationLayout.isEnabled = true
+                setupByTime()
             }
         }
+    }
+
+    private fun ActivityAddSportBinding.setupByTime() {
+        viewModel.sport.trainingWay = TrainingWay.BY_TIME
+        etMinGroupLayout.isEnabled = false
+        etMaxGroupLayout.isEnabled = false
+        etMinCountLayout.isEnabled = false
+        etMaxCountLayout.isEnabled = false
+        etGroupRestDurationLayout.isEnabled = false
+        etMinDurationLayout.isEnabled = true
+        etMaxDurationLayout.isEnabled = true
+    }
+
+    private fun ActivityAddSportBinding.setupByGroup() {
+        viewModel.sport.trainingWay = TrainingWay.BY_GROUP
+        etMinGroupLayout.isEnabled = true
+        etMaxGroupLayout.isEnabled = true
+        etMinCountLayout.isEnabled = true
+        etMaxCountLayout.isEnabled = true
+        etGroupRestDurationLayout.isEnabled = true
+        etMinDurationLayout.isEnabled = false
+        etMaxDurationLayout.isEnabled = false
     }
 
     private fun ActivityAddSportBinding.setupTextWatcher() {
@@ -123,4 +155,24 @@ class AddSportActivity : AppCompatActivity() {
         })
     }
 
+    private fun ActivityAddSportBinding.recover(sport: Sport) {
+        binding.etSportName.postDelayed({
+            if (sport.trainingWay.byGroup()) {
+                radioGroup.check(R.id.rbGroup)
+                setupByGroup()
+            } else {
+                radioGroup.check(R.id.rbTime)
+                setupByTime()
+            }
+            etSportName.setText(sport.name)
+            etMinGroupCount.setText(sport.minGroup.toString())
+            etMaxGroupCount.setText(sport.maxGroup.toString())
+            etMinCount.setText(sport.minCount.toString())
+            etMaxCount.setText(sport.maxCount.toString())
+            etGroupRestDuration.setText(sport.groupRestDuration.toString())
+            etMinDuration.setText(sport.minDuration.toString())
+            etMaxDuration.setText(sport.maxDuration.toString())
+            etRestDuration.setText(sport.restDuration.toString())
+        },300)
+    }
 }

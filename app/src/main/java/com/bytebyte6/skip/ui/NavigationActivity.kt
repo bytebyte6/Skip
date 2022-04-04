@@ -1,6 +1,9 @@
 package com.bytebyte6.skip.ui
 
 import android.os.Bundle
+import android.util.Log
+import android.view.KeyEvent
+import android.view.WindowManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -31,5 +34,12 @@ class NavigationActivity : AppCompatActivity() {
         )
 //        setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        window?.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        Log.d("TAG11", "onKeyDown: ${KeyEvent.keyCodeToString(keyCode)}")
+        return super.onKeyDown(keyCode, event)
     }
 }

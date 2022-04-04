@@ -9,10 +9,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bytebyte6.skip.R
 import com.bytebyte6.skip.data.RealSport
 import com.bytebyte6.skip.data.TrainingWay
+import com.bytebyte6.skip.data.byGroup
 import com.bytebyte6.skip.databinding.ItemRealSportBinding
 import com.bytebyte6.skip.getTimeString
+import com.bytebyte6.skip.randomColor
+import com.bytebyte6.skip.randomColorByNightMode
 
-class RealSportAdapter : RecyclerView.Adapter<RealSportAdapter.ViewHolder>() {
+class RealSportAdapter(private val viewModel: TodayTrainingViewModel) : RecyclerView.Adapter<RealSportAdapter.ViewHolder>() {
 
     private val list = mutableListOf<RealSport>()
 
@@ -33,7 +36,8 @@ class RealSportAdapter : RecyclerView.Adapter<RealSportAdapter.ViewHolder>() {
         val entity = list[position]
         val ctx = holder.binding.root.context
         val checkBox = holder.binding.checkBox
-        if (entity.trainingWay == TrainingWay.BY_GROUP) {
+        val text = holder.binding.text
+        if (entity.trainingWay.byGroup()) {
             val string = ctx.getString(
                 R.string.name_s_group_d_count_d,
                 entity.name,
@@ -41,7 +45,7 @@ class RealSportAdapter : RecyclerView.Adapter<RealSportAdapter.ViewHolder>() {
                 entity.count,
                 ctx.getTimeString(entity.groupRestDuration)
             )
-            checkBox.text = Html.fromHtml(string)
+            text.text = Html.fromHtml(string)
         } else {
             val string = ctx.getString(
                 R.string.name_s_duration_s,
@@ -49,8 +53,13 @@ class RealSportAdapter : RecyclerView.Adapter<RealSportAdapter.ViewHolder>() {
                 ctx.getTimeString(entity.duration),
                 ctx.getTimeString(entity.restDuration)
             )
-            checkBox.text = Html.fromHtml(string)
+            text.text = Html.fromHtml(string)
         }
+        checkBox.isChecked = entity.goal
+        checkBox.setOnCheckedChangeListener { _, _ ->
+            viewModel.check(position)
+        }
+        holder.binding.cardView.setCardBackgroundColor(randomColorByNightMode())
     }
 
     override fun getItemCount(): Int {

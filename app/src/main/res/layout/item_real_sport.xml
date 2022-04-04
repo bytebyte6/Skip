@@ -1,9 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.checkbox.MaterialCheckBox xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/checkBox"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardView"
+    android:foreground="?attr/selectableItemBackgroundBorderless"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginTop="8dp"
+    android:focusable="true"
+    android:clickable="true"
+    app:cardElevation="0dp"
+    app:cardCornerRadius="8dp"
+    app:cardBackgroundColor="@color/white"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:text="@string/today_plan">
+    android:layout_height="56dp">
 
-</com.google.android.material.checkbox.MaterialCheckBox>
+    <TextView
+        android:padding="16dp"
+        style="@style/ListItemStyle"
+        android:layout_gravity="center_vertical"
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:layout_gravity="end"
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+    </com.google.android.material.checkbox.MaterialCheckBox>
+
+</com.google.android.material.card.MaterialCardView>

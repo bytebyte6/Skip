@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    app:cardElevation="8dp"
+    android:foreground="?selectableItemBackgroundBorderless"
+    app:cardElevation="0dp"
     app:cardCornerRadius="8dp"
     android:layout_margin="8dp"
     app:contentPadding="8dp">
@@ -17,30 +18,35 @@
         android:orientation="vertical">
 
         <TextView
+            style="@style/ListItemSubTitleStyle"
             android:id="@+id/tvName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/sport_name" />
 
         <TextView
+            style="@style/ListItemBodyStyle"
             android:id="@+id/tvTrainingWay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/way_by_time" />
 
         <TextView
+            style="@style/ListItemBodyStyle"
             android:id="@+id/tvMinDuration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/duration_min_s" />
 
         <TextView
+            style="@style/ListItemBodyStyle"
             android:id="@+id/tvMaxDuration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/duration_max_s" />
 
         <TextView
+            style="@style/ListItemBodyStyle"
             android:id="@+id/tvRestDuration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

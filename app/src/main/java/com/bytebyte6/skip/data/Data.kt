@@ -17,7 +17,7 @@ object Data {
     }
 
     fun getRealSport(sport: Sport): RealSport {
-        if (sport.trainingWay == TrainingWay.BY_TIME) {
+        if (sport.trainingWay.byTime()) {
             return RealSport(
                 name = sport.name,
                 trainingWay = sport.trainingWay,

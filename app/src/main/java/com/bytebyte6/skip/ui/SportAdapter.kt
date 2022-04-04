@@ -1,6 +1,7 @@
 package com.bytebyte6.skip.ui
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,6 +34,11 @@ class SportAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val sport = list[position]
+        holder.itemView.setOnClickListener {
+            it.context.startActivity(Intent(it.context, AddSportActivity::class.java).apply {
+                putExtra(AddSportActivity.KEY_ID,sport.id)
+            })
+        }
         when (holder) {
             is TimeViewHolder -> {
                 initByTime(holder,sport)

@@ -8,6 +8,7 @@ import com.bytebyte6.skip.Event
 import com.bytebyte6.skip.data.AppDataBase
 import com.bytebyte6.skip.data.Sport
 import com.bytebyte6.skip.data.TrainingWay
+import com.bytebyte6.skip.data.byTime
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -46,9 +47,9 @@ class AddSportViewModel(application: Application) : AndroidViewModel(application
     private val restDuration = MutableLiveData<Event<Any>>()
     val restDurationError: LiveData<Event<Any>> = restDuration
 
-    val sport = Sport()
+    var sport = Sport()
 
-    fun addSport() {
+    fun save(id: Int) {
         var pass = true
         if (sport.name.isEmpty()) {
             name.value = Event(error)
@@ -58,7 +59,7 @@ class AddSportViewModel(application: Application) : AndroidViewModel(application
             restDuration.value = Event(error)
             pass = false
         }
-        if (sport.trainingWay == TrainingWay.BY_TIME) {
+        if (sport.trainingWay.byTime()) {
             if (sport.minDuration == -1) {
                 minDuration.value = Event(error)
                 pass = false
@@ -91,11 +92,14 @@ class AddSportViewModel(application: Application) : AndroidViewModel(application
         }
         if (pass) {
             executorService.execute {
-                AppDataBase.getAppDataBase(getApplication())
+                val sportDao = AppDataBase.getAppDataBase(getApplication())
                     .sportDao()
-                    .insert(sport)
+                if (id == -1) {
+                    sportDao.insert(sport)
+                } else {
+                    sportDao.update(sport)
+                }
             }
         }
-
     }
 }

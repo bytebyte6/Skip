@@ -43,13 +43,13 @@ class SportListActivity : AppCompatActivity() {
         AppDataBase.getAppDataBase(this)
             .sportDao()
             .list()
-            .observe(this, {
+            .observe(this) {
                 if (it.isEmpty()) {
                     initDb()
                 } else {
                     adapter.update(it)
                 }
-            })
+            }
     }
 
     private fun initDb() {
