@@ -55,7 +55,6 @@ class SkipService : AccessibilityService() {
         super.onDestroy()
         unregisterReceiver(pingReceiver)
         Log.d(TAG, "onDestroy")
-
     }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
