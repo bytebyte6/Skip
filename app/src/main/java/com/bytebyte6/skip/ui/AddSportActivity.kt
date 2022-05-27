@@ -31,7 +31,6 @@ class AddSportActivity : AppCompatActivity() {
         binding.run {
             toolbar.setOnMenuItemClickListener {
                 viewModel.save(id)
-                finish()
                 true
             }
             setupCheckChangeListener()
@@ -152,6 +151,9 @@ class AddSportActivity : AppCompatActivity() {
         })
         viewModel.restDurationError.observe(this, EventObserver {
             binding.etRestDurationLayout.error = getString(R.string.empty_tips)
+        })
+        viewModel.onSaveSuccess.observe(this,EventObserver{
+            finish()
         })
     }
 

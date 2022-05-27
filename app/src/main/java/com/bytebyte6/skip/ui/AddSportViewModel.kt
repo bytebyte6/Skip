@@ -47,6 +47,9 @@ class AddSportViewModel(application: Application) : AndroidViewModel(application
     private val restDuration = MutableLiveData<Event<Any>>()
     val restDurationError: LiveData<Event<Any>> = restDuration
 
+    private val saveSuccess = MutableLiveData<Event<Boolean>>()
+    val onSaveSuccess: LiveData<Event<Boolean>> = saveSuccess
+
     var sport = Sport()
 
     fun save(id: Int) {
@@ -99,6 +102,7 @@ class AddSportViewModel(application: Application) : AndroidViewModel(application
                 } else {
                     sportDao.update(sport)
                 }
+                saveSuccess.postValue(Event(true))
             }
         }
     }
